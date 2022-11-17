@@ -1,0 +1,14 @@
+use schema_utils::*;
+
+#[allow(dead_code)]
+#[derive(Updatable)]
+pub struct TestSchema {
+    id: String,
+    date: i64,
+    notes: Vec<String>,
+    option: Option<String>,
+    is_true: bool,
+}
+
+#[test]
+fn main() {}
