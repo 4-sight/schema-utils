@@ -1,0 +1,25 @@
+[package]
+name = "schema-utils"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+members = [
+  "shared",
+  "schema-derive",
+  "schema-core",
+  "updatable-derive",
+  "updatable-core",
+]
+
+[dev-dependencies]
+trybuild = "1.0"
+surrealdb = { version = "1.0.0-beta.8", default-features = false, features = [
+  'parallel',
+  'kv-mem',
+] }
+
+[dependencies]
+shared = { version = "*", path = "./shared" }
+schema-derive = { version = "*", path = "./schema-derive" }
+updatable-derive = { version = "*", path = "./updatable-derive" }
