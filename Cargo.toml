@@ -4,13 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [workspace]
-members = [
-  "shared",
-  "schema-derive",
-  "schema-core",
-  "updatable-derive",
-  "updatable-core",
-]
+members = ["shared", "schema", "updatable", "bmc"]
 
 [dev-dependencies]
 trybuild = "1.0"
@@ -21,5 +15,6 @@ surrealdb = { version = "1.0.0-beta.8", default-features = false, features = [
 
 [dependencies]
 shared = { version = "*", path = "./shared" }
-schema-derive = { version = "*", path = "./schema-derive" }
-updatable-derive = { version = "*", path = "./updatable-derive" }
+schema = { version = "*", path = "./schema" }
+updatable = { version = "*", path = "./updatable" }
+bmc = { version = "*", path = "./bmc" }

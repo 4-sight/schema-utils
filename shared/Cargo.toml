@@ -14,3 +14,4 @@ surrealdb = { version = "1.0.0-beta.8", default-features = false, features = [
   'parallel',
   'kv-mem',
 ] }
+thiserror = "1.0.37"

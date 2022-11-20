@@ -1,0 +1,7 @@
+[package]
+name = "updatable"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+updatable-derive = { version = "*", path = "./updatable-derive" }

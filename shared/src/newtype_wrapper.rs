@@ -97,15 +97,21 @@ impl TryFrom<NewTypeWrapper<Value>> for Vec<String> {
     }
 }
 
-impl<T> From<NewTypeWrapper<Option<T>>> for Value
-where
-    T: Into<Value>,
-{
-    fn from(w: NewTypeWrapper<Option<T>>) -> Self {
-        match w.0 {
-            None => Value::None,
-            Some(val) => val.into(),
-        }
+impl From<NewTypeWrapper<String>> for Value {
+    fn from(w: NewTypeWrapper<String>) -> Self {
+        w.0.into()
+    }
+}
+
+impl From<NewTypeWrapper<i64>> for Value {
+    fn from(w: NewTypeWrapper<i64>) -> Self {
+        w.0.into()
+    }
+}
+
+impl From<NewTypeWrapper<bool>> for Value {
+    fn from(w: NewTypeWrapper<bool>) -> Self {
+        w.0.into()
     }
 }
 
@@ -118,5 +124,17 @@ where
             .map(|i| i.into())
             .collect::<Vec<Value>>()
             .into()
+    }
+}
+
+impl<T> From<NewTypeWrapper<Option<T>>> for Value
+where
+    T: Into<Value>,
+{
+    fn from(w: NewTypeWrapper<Option<T>>) -> Self {
+        match w.0 {
+            None => Value::None,
+            Some(val) => val.into(),
+        }
     }
 }
