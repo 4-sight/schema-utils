@@ -33,6 +33,23 @@ impl TryFrom<NewTypeWrapper<Value>> for i64 {
     }
 }
 
+impl TryFrom<NewTypeWrapper<Value>> for u64 {
+    type Error = Error;
+    fn try_from(val: NewTypeWrapper<Value>) -> Result<u64, Error> {
+        match val.0 {
+            Value::Number(obj) => {
+                let output = obj
+                    .as_int()
+                    .try_into()
+                    .map_err(|_| Error::ValueNotOfType("u64".into()))?;
+
+                Ok(output)
+            }
+            _ => Err(Error::ValueNotOfType("u64".into())),
+        }
+    }
+}
+
 impl TryFrom<NewTypeWrapper<Value>> for bool {
     type Error = Error;
     fn try_from(val: NewTypeWrapper<Value>) -> Result<bool, Error> {
