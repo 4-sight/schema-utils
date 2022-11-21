@@ -109,6 +109,12 @@ impl From<NewTypeWrapper<i64>> for Value {
     }
 }
 
+impl From<NewTypeWrapper<u64>> for Value {
+    fn from(w: NewTypeWrapper<u64>) -> Self {
+        w.0.into()
+    }
+}
+
 impl From<NewTypeWrapper<bool>> for Value {
     fn from(w: NewTypeWrapper<bool>) -> Self {
         w.0.into()
