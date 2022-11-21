@@ -78,7 +78,7 @@ impl TryFrom<NewTypeWrapper<Value>> for Option<i64> {
         match val.0 {
             Value::None => Ok(None),
             Value::Number(obj) => Ok(Some(obj.as_int())),
-            _ => Err(Error::ValueNotOfType("Option".into())),
+            _ => Err(Error::ValueNotOfType("Number".into())),
         }
     }
 }
@@ -103,13 +103,13 @@ impl TryFrom<NewTypeWrapper<Value>> for Vec<String> {
                 for val in a.0.into_iter() {
                     match val {
                         Value::Strand(s) => v.push(s.as_string()),
-                        _ => return Err(Error::ValueNotOfType("string".into())),
+                        _ => return Err(Error::ValueNotOfType("String".into())),
                     }
                 }
 
                 Ok(v)
             }
-            _ => Err(Error::ValueNotOfType("Option".into())),
+            _ => Err(Error::ValueNotOfType("Array".into())),
         }
     }
 }
