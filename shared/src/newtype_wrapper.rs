@@ -6,47 +6,86 @@ pub struct NewTypeWrapper<T>(pub T);
 impl TryFrom<NewTypeWrapper<Value>> for Object {
     type Error = Error;
     fn try_from(val: NewTypeWrapper<Value>) -> Result<Object, Error> {
-        match val.0 {
-            Value::Object(obj) => Ok(obj),
-            _ => Err(Error::ValueNotOfType("object".into())),
-        }
+        let Value::Object(obj) = val.0 else {
+            return Err(Error::ValueNotOfType("Object".into()));
+        };
+        Ok(obj)
     }
 }
 
 impl TryFrom<NewTypeWrapper<Value>> for Array {
     type Error = Error;
     fn try_from(val: NewTypeWrapper<Value>) -> Result<Array, Error> {
-        match val.0 {
-            Value::Array(obj) => Ok(obj),
-            _ => Err(Error::ValueNotOfType("Array".into())),
-        }
+        let Value::Array(arr) = val.0 else {
+            return Err(Error::ValueNotOfType("Array".into()));
+        };
+        Ok(arr)
     }
 }
 
 impl TryFrom<NewTypeWrapper<Value>> for i64 {
     type Error = Error;
     fn try_from(val: NewTypeWrapper<Value>) -> Result<i64, Error> {
-        match val.0 {
-            Value::Number(obj) => Ok(obj.as_int()),
-            _ => Err(Error::ValueNotOfType("i64".into())),
-        }
+        let Value::Number(num) = val.0 else {
+            return Err(Error::ValueNotOfType("Number".into()));
+        };
+        Ok(num.as_int())
     }
 }
 
 impl TryFrom<NewTypeWrapper<Value>> for u64 {
     type Error = Error;
     fn try_from(val: NewTypeWrapper<Value>) -> Result<u64, Error> {
-        match val.0 {
-            Value::Number(obj) => {
-                let output = obj
-                    .as_int()
-                    .try_into()
-                    .map_err(|_| Error::ValueNotOfType("u64".into()))?;
+        let Value::Number(num) = val.0 else {
+            return Err(Error::ValueNotOfType("Number".into()));
+        };
+        let int = num.as_int();
+        let output = int
+            .try_into()
+            .map_err(|_| Error::ValueNotOfType("u64".into()))?;
+        Ok(output)
+    }
+}
 
-                Ok(output)
-            }
-            _ => Err(Error::ValueNotOfType("u64".into())),
-        }
+impl TryFrom<NewTypeWrapper<Value>> for u32 {
+    type Error = Error;
+    fn try_from(val: NewTypeWrapper<Value>) -> Result<u32, Error> {
+        let Value::Number(num) = val.0 else {
+            return Err(Error::ValueNotOfType("Number".into()));
+        };
+        let int = num.as_int();
+        let output = int
+            .try_into()
+            .map_err(|_| Error::ValueNotOfType("u32".into()))?;
+        Ok(output)
+    }
+}
+
+impl TryFrom<NewTypeWrapper<Value>> for u16 {
+    type Error = Error;
+    fn try_from(val: NewTypeWrapper<Value>) -> Result<u16, Error> {
+        let Value::Number(num) = val.0 else {
+            return Err(Error::ValueNotOfType("Number".into()));
+        };
+        let int = num.as_int();
+        let output = int
+            .try_into()
+            .map_err(|_| Error::ValueNotOfType("u16".into()))?;
+        Ok(output)
+    }
+}
+
+impl TryFrom<NewTypeWrapper<Value>> for u8 {
+    type Error = Error;
+    fn try_from(val: NewTypeWrapper<Value>) -> Result<u8, Error> {
+        let Value::Number(num) = val.0 else {
+            return Err(Error::ValueNotOfType("Number".into()));
+        };
+        let int = num.as_int();
+        let output = int
+            .try_into()
+            .map_err(|_| Error::ValueNotOfType("u8".into()))?;
+        Ok(output)
     }
 }
 
@@ -78,7 +117,7 @@ impl TryFrom<NewTypeWrapper<Value>> for Option<i64> {
         match val.0 {
             Value::None => Ok(None),
             Value::Number(obj) => Ok(Some(obj.as_int())),
-            _ => Err(Error::ValueNotOfType("Number".into())),
+            _ => Err(Error::ValueNotOfType("Option".into())),
         }
     }
 }
@@ -103,13 +142,13 @@ impl TryFrom<NewTypeWrapper<Value>> for Vec<String> {
                 for val in a.0.into_iter() {
                     match val {
                         Value::Strand(s) => v.push(s.as_string()),
-                        _ => return Err(Error::ValueNotOfType("String".into())),
+                        _ => return Err(Error::ValueNotOfType("string".into())),
                     }
                 }
 
                 Ok(v)
             }
-            _ => Err(Error::ValueNotOfType("Array".into())),
+            _ => Err(Error::ValueNotOfType("Option".into())),
         }
     }
 }
