@@ -122,6 +122,57 @@ impl TryFrom<NewTypeWrapper<Value>> for Option<i64> {
     }
 }
 
+impl TryFrom<NewTypeWrapper<Value>> for Option<u8> {
+    type Error = Error;
+    fn try_from(val: NewTypeWrapper<Value>) -> Result<Option<u8>, Error> {
+        match val.0 {
+            Value::None => Ok(None),
+            Value::Number(obj) => {
+                let int = obj.as_int();
+                let out = int
+                    .try_into()
+                    .map_err(|_| Error::ValueNotOfType("u8".into()))?;
+                Ok(Some(out))
+            }
+            _ => Err(Error::ValueNotOfType("Option".into())),
+        }
+    }
+}
+
+impl TryFrom<NewTypeWrapper<Value>> for Option<u16> {
+    type Error = Error;
+    fn try_from(val: NewTypeWrapper<Value>) -> Result<Option<u16>, Error> {
+        match val.0 {
+            Value::None => Ok(None),
+            Value::Number(obj) => {
+                let int = obj.as_int();
+                let out = int
+                    .try_into()
+                    .map_err(|_| Error::ValueNotOfType("u16".into()))?;
+                Ok(Some(out))
+            }
+            _ => Err(Error::ValueNotOfType("Option".into())),
+        }
+    }
+}
+
+impl TryFrom<NewTypeWrapper<Value>> for Option<u32> {
+    type Error = Error;
+    fn try_from(val: NewTypeWrapper<Value>) -> Result<Option<u32>, Error> {
+        match val.0 {
+            Value::None => Ok(None),
+            Value::Number(obj) => {
+                let int = obj.as_int();
+                let out = int
+                    .try_into()
+                    .map_err(|_| Error::ValueNotOfType("u32".into()))?;
+                Ok(Some(out))
+            }
+            _ => Err(Error::ValueNotOfType("Option".into())),
+        }
+    }
+}
+
 impl TryFrom<NewTypeWrapper<Value>> for Option<String> {
     type Error = Error;
     fn try_from(val: NewTypeWrapper<Value>) -> Result<Option<String>, Error> {
