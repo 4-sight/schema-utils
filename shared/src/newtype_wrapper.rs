@@ -251,3 +251,15 @@ where
         }
     }
 }
+
+//===========================================================
+
+trait IntoValue {
+    fn into_value(self) -> Value;
+}
+
+impl IntoValue for String {
+    fn into_value(self) -> Value {
+        self.into()
+    }
+}
