@@ -254,7 +254,7 @@ where
 
 //===========================================================
 
-trait IntoValue {
+pub trait IntoValue {
     fn into_value(self) -> Value;
 }
 
